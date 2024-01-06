@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 
 @ControllerAdvice
 public class DefaultAdvice {
@@ -18,14 +17,14 @@ public class DefaultAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Object handleRequestValidationException(Exception ex, HttpServletRequest request) {
-        Map<String, Object> responseBody = new LinkedHashMap<>();
-
-        responseBody.put("timestamp", new Date());
-        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
-        responseBody.put("error", ex.getMessage());
-        responseBody.put("path", request.getServletPath());
-
-        return responseBody;
+        //Map<String, Object> responseBody = new LinkedHashMap<>();
+        //сделать вместо мапы класс и поприравнивать всё что ниже в конструкторе
+        //погуглить респонсбади
+//        responseBody.put("timestamp", new Date());
+//        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+//        responseBody.put("error", ex.getMessage());
+//        responseBody.put("path", request.getServletPath());
+        return new HttpResponseBody(new Date(), HttpStatus.BAD_REQUEST, ex.getMessage(), request.getServletPath());
     }
 
 }
