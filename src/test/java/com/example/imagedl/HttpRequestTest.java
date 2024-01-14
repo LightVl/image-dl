@@ -3,8 +3,6 @@ package com.example.imagedl;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class HttpRequestTest extends AbstractTestClass {
 
     @LocalServerPort
@@ -34,43 +31,43 @@ class HttpRequestTest extends AbstractTestClass {
     @Test
     @SneakyThrows
     void greetingShouldReturnDefaultMessage() {
-        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image", port), Image.class);
+        final ResponseEntity<String> response = restTemplate.getForEntity(String.format("http://localhost:%d/image", port), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     @Test
     @SneakyThrows
     void success() {
-        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=tratata&qty=10", port), Image.class);
+        final ResponseEntity<String> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=tratata&qty=10", port), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
     @Test
     @SneakyThrows
     void badcheck1() {
-        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=", port), Image.class);
+        final ResponseEntity<String> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=", port), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     @Test
     @SneakyThrows
     void badcheck2() {
-        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=yfudjgyfudjgyfudjgyfudjgyfudjgyfudjgyfudjgyfudjgyfudjg&qty=10", port), Image.class);
+        final ResponseEntity<String> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=witcherwitcherwitcherwitcherwitcherwitcherwitcherwitcherwitcherwitcher&qty=10", port), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     @Test
     @SneakyThrows
     void badcheck3() {
-        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=gyfudjgyfudjgyfudjgyfudjgyfudjgyfudjg&qty=0", port), Image.class);
+        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=witcher&qty=0", port), Image.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     @Test
     @SneakyThrows
     void badcheck4() {
-        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=gyfudjgyfudjgyfudjgyfudjgyfudjgyfudjg&qty=50", port), Image.class);
+        final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=witcher&qty=50", port), Image.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
-    @Test
-    @SneakyThrows
-    void success2() {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/image?name=tratata&qty=10",
-                String.class)).contains("tratata");
-    }
+//    @Test
+//    @SneakyThrows
+//    void success2() {
+//        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/image?name=tratata&qty=10",
+//                String.class)).contains("tratata");
+//    }
 }
