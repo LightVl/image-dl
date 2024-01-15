@@ -64,10 +64,4 @@ class HttpRequestTest extends AbstractTestClass {
         final ResponseEntity<Image> response = restTemplate.getForEntity(String.format("http://localhost:%d/image?name=witcher&qty=50", port), Image.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
-//    @Test
-//    @SneakyThrows
-//    void success2() {
-//        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/image?name=tratata&qty=10",
-//                String.class)).contains("tratata");
-//    }
 }
