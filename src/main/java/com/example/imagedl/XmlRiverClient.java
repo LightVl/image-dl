@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@FeignClient(value = "xmlriver", url = "https://xmlriver.com/", configuration = XmlRiverClient.Configuration.class)
+@FeignClient(value = "xmlriver", url = "${xmlconfiguration.xmlurl}", configuration = XmlRiverClient.Configuration.class)
 public interface XmlRiverClient {
 //    @Value("${xmlconfiguration.xmlurl}")
 //    public static final String xmlurl = "https://xmlriver.com/";
 //    @Value("${xmlconfiguration.xmlpath}")
-//    public static final String xmlpath = "";
-    @RequestMapping(method = RequestMethod.GET, value = "/search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query={name}", produces = MediaType.APPLICATION_XML_VALUE)
+//    public static final String xmlpath = "/search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query={name}";
+    @RequestMapping(method = RequestMethod.GET, value = "${xmlconfiguration.xmlpath}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public String getImages(@PathVariable String name);
 
