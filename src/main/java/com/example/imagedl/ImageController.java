@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,14 +25,14 @@ import java.io.StringReader;
 @Validated
 public class ImageController {
 
-    private static final String template = "Need %s pictures about %s!";
+    @Value("${jsonconfiguration.jsonpath}")
+    private String jsonpathconf;
     @Autowired
-    XMLRiverClient XMLClient;
+    XmlRiverClient XMLClient;
 
-    @GetMapping(value = "/image", produces = "application/json")
+    @GetMapping(value = "${jsonconfiguration.jsonpath}", produces = "application/json")
     public String getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws ParserConfigurationException, IOException, SAXException {
         String xmlString = XMLClient.getImages(name);
-
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         InputSource is = new InputSource(new StringReader(xmlString));
