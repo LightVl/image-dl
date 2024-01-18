@@ -24,10 +24,6 @@ import java.util.List;
 
 @FeignClient(value = "xmlriver", url = "${xmlconfiguration.xmlurl}", configuration = XmlRiverClient.Configuration.class)
 public interface XmlRiverClient {
-//    @Value("${xmlconfiguration.xmlurl}")
-//    public static final String xmlurl = "https://xmlriver.com/";
-//    @Value("${xmlconfiguration.xmlpath}")
-//    public static final String xmlpath = "/search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query={name}";
     @RequestMapping(method = RequestMethod.GET, value = "${xmlconfiguration.xmlpath}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public List<ImageLink> getImages(@PathVariable String name);
