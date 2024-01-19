@@ -1,5 +1,6 @@
 package com.example.imagedl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -9,8 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.xml.sax.SAXException;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,12 +23,12 @@ public class ImageController {
     XmlRiverClient XMLClient;
 
     @GetMapping(value = "${jsonconfiguration.jsonpath}", produces = "application/json")
-    public String getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws ParserConfigurationException, IOException, SAXException {
+    public String getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException {
         quantity = qty;
-        List<ImageLink> Images = XMLClient.getImages(name);
+        return jsonSerializer(XMLClient.getImages(name));
+    }
+    public static String jsonSerializer (List<ImageLink> Images) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonReady = mapper.writeValueAsString(Images);
-        return jsonReady;
-
+        return mapper.writeValueAsString(Images);
     }
 }
