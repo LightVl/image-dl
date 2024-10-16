@@ -25,7 +25,9 @@ public class ImageController {
     @GetMapping(value = "${jsonconfiguration.jsonpath}", produces = "application/json")
     public String getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException {
         quantity = qty;
-        return jsonSerializer(XMLClient.getImages(name));
+        String output = jsonSerializer(XMLClient.getImages(name));
+        //DBConnection.saveLog(name, qty, output);
+        return output;
     }
     public static String jsonSerializer (List<ImageLink> Images) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
