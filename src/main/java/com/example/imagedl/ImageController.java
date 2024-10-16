@@ -23,10 +23,12 @@ public class ImageController {
     XmlRiverClient XMLClient;
 
     @GetMapping(value = "${jsonconfiguration.jsonpath}", produces = "application/json")
-    public String getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException {
+    public String getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException, InterruptedException {
         quantity = qty;
         String output = jsonSerializer(XMLClient.getImages(name));
-        //DBConnection.saveLog(name, qty, output);
+        //Thread.sleep(10000);
+        //System.out.println(output);
+        DBConnection.saveLog(name, qty, output);
         return output;
     }
     public static String jsonSerializer (List<ImageLink> Images) throws JsonProcessingException {

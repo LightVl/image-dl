@@ -17,7 +17,7 @@ public class DBConnection {
 
     @Column(name = "results")    private int results;
 
-    @Column(name = "urls")    private String urls;
+    @Column(name = "urls", length=10485760)    private String urls;
 
     // Getters and setters, constructors, etc.
 
@@ -35,7 +35,7 @@ public class DBConnection {
 
     public String getUrls() { return urls; }
 
-    public void setUrls(String Urls) { this.urls = urls; }
+    public void setUrls(String urls) { this.urls = urls; }
 
     public static void saveLog(String request, int results, String urls) {
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
