@@ -1,0 +1,10 @@
+/target/classes/com/example/imagedl/DBConnection.class
+/target/classes/com/example/imagedl/DefaultAdvice.class
+/target/classes/com/example/imagedl/ErrorResponseBody.class
+/target/classes/com/example/imagedl/Image.class
+/target/classes/com/example/imagedl/ImageController.class
+/target/classes/com/example/imagedl/ImageLink.class
+/target/classes/com/example/imagedl/RestServiceApplication.class
+/target/classes/com/example/imagedl/XmlConfiguration.class
+/target/classes/com/example/imagedl/XmlRiverClient$Configuration.class
+/target/classes/com/example/imagedl/XmlRiverClient.class

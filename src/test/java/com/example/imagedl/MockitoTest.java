@@ -21,17 +21,7 @@ public class MockitoTest extends AbstractTestClass {
         List<ImageLink> testImage = new ArrayList<>();
         testImage.add(new ImageLink (1, "https://habrastorage.org/r/w1560/getpro/habr/upload_files/06a/22a/3b4/06a22a3b409f64e848e43b7a23cda9d0.png"));
         Mockito.when(mockDataService.getImages(Mockito.anyString())).thenReturn(testImage);
-        List<ImageLink> Images = mockDataService.getImages(Mockito.anyString());
-        //TODO: каким-то образом также проверить imagecontroller
-        assertEquals(ImageController.jsonSerializer(Images),"[{\"id\":1,\"url\":\"https://habrastorage.org/r/w1560/getpro/habr/upload_files/06a/22a/3b4/06a22a3b409f64e848e43b7a23cda9d0.png\"}]");
+        //каким-то образом также проверить imagecontroller
+        assertEquals("[{\"id\":1,\"url\":\"https://habrastorage.org/r/w1560/getpro/habr/upload_files/06a/22a/3b4/06a22a3b409f64e848e43b7a23cda9d0.png\"}]", ImageController.jsonSerializer(mockDataService.getImages(Mockito.anyString())));
     }
-
-//    @Test
-//    public void testException() throws IOException {
-//        ImageController mockDataService = Mockito.mock(ImageController.class);
-//        Mockito.when(mockDataService.getImage(Mockito.anyString(), Mockito.anyInt())).thenThrow(new IOException());
-//        String error = mockDataService.getImage(Mockito.anyString(), Mockito.anyInt());
-//        System.out.print(error);
-//        assertEquals(1,1);
-//    }
 }
