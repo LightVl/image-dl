@@ -1,5 +1,6 @@
-package com.example.imagedl;
+package com.example.imagedl.controller;
 
+import com.example.imagedl.model.ErrorResponseBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

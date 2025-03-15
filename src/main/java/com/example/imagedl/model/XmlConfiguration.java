@@ -1,4 +1,4 @@
-package com.example.imagedl;
+package com.example.imagedl.model;
 
 import lombok.Data;
 import lombok.Getter;
