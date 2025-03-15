@@ -28,7 +28,8 @@ public class ImageController {
         String output = jsonSerializer(XMLClient.getImages(name));
         //Thread.sleep(10000);
         //System.out.println(output);
-        DBConnection.saveLog(name, qty, output);
+        new Thread(() -> DBConnection.saveLog(name, qty, output)).start();
+        //DBConnection.saveLog(name, qty, output);
         return output;
     }
     public static String jsonSerializer (List<ImageLink> Images) throws JsonProcessingException {
