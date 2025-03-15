@@ -17,7 +17,7 @@ public class DBConnection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)   private Long id;
 
-    @Column(name = "request")    private String request;
+    @Column(name = "request")   private String request;
 
     @Column(name = "results")    private int results;
 
@@ -33,7 +33,7 @@ public class DBConnection {
         dbConnection.setResults(results);
         dbConnection.setUrls(urls);
         session.getTransaction().begin();
-        session.save(dbConnection);
+        session.persist(dbConnection);
         session.getTransaction().commit();
         session.close();
         sessionFactory.close();

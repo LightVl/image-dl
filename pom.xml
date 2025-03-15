@@ -98,6 +98,12 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>6.6.1.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.googlejavaformat</groupId>
+			<artifactId>google-java-format</artifactId>
+			<version>1.25.0</version>
+		</dependency>
+
 
 	</dependencies>
 

@@ -1,8 +1,10 @@
 package com.example.imagedl;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
 @Setter
 @NoArgsConstructor
 public class ImageLink {
@@ -11,11 +13,5 @@ public class ImageLink {
     public ImageLink (Integer id, String url) {
         this.id = id;
         this.url = url;
-    }
-    public String getUrl() {
-        return this.url;
-    }
-    public Integer getId() {
-        return this.id;
     }
 }
