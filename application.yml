@@ -3,14 +3,18 @@ xmlconfiguration:
   xmlpath: /search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query={name}
 jsonconfiguration:
   jsonpath: /image
-hibernate:
-  connection:
-    driver_class: org.postgresql.Driver
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/imagedl
     username: postgres
     password: password
-  dialect: org.hibernate.dialect.PostgreSQLDialect
-  show_sql: true
-  format_sql: true
-hbm2ddl:
-  auto: update
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    database-platform=org: hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8080

@@ -1,5 +1,6 @@
-package com.example.imagedl;
+package com.example.imagedl.controller;
 
+import com.example.imagedl.model.ImageLink;
 import feign.Util;
 import feign.codec.Decoder;
 import org.springframework.cloud.openfeign.FeignClient;
