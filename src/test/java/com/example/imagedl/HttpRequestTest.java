@@ -1,5 +1,7 @@
 package com.example.imagedl;
 
+import com.example.imagedl.controller.ImageController;
+import com.example.imagedl.model.Image;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;

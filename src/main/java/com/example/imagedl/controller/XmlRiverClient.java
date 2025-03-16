@@ -1,14 +1,12 @@
-package com.example.imagedl;
+package com.example.imagedl.controller;
 
+import com.example.imagedl.model.ImageLink;
 import feign.Util;
 import feign.codec.Decoder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,7 +22,7 @@ import java.util.List;
 
 @FeignClient(value = "xmlriver", url = "${xmlconfiguration.xmlurl}", configuration = XmlRiverClient.Configuration.class)
 public interface XmlRiverClient {
-    @RequestMapping(method = RequestMethod.GET, value = "${xmlconfiguration.xmlpath}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value = "${xmlconfiguration.xmlpath}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public List<ImageLink> getImages(@PathVariable String name);
 
@@ -38,24 +36,23 @@ public interface XmlRiverClient {
                 try {
                     builder = factory.newDocumentBuilder();
                 } catch (ParserConfigurationException e) {
-                    throw new RuntimeException(e);
+                    throw new IllegalArgumentException("configuration failed "+e);
                 }
                 InputSource is = new InputSource(new StringReader(bodyStr));
                 Document doc = null;
                 try {
                     doc = builder.parse(is);
                 } catch (SAXException e) {
-                    throw new RuntimeException(e);
+                    throw new IllegalArgumentException("parsing failed "+e);
                 }
-                List<ImageLink> Images= new ArrayList<ImageLink>();
+                List<ImageLink> images= new ArrayList<>();
                 NodeList hiList = doc.getElementsByTagName("imgurl");
-                for (Integer i = 1; i <= ImageController.quantity; i++) {
+                for (Integer i = 1; i <= ImageController.getQuantity(); i++) {
                     Node child = hiList.item(i);
                     String contents = child.getTextContent();
-                    Images.add(new ImageLink(i, contents));
+                    images.add(new ImageLink(i, contents));
                 }
-                //return bodyStr;
-                return Images;
+                return images;
             };
         }
     }
