@@ -1,6 +1,7 @@
 package com.example.imagedl;
 
 import com.example.imagedl.controller.ImageController;
+import com.example.imagedl.controller.XmlRiverClient;
 import com.example.imagedl.model.Image;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,8 @@ class HttpRequestTest extends AbstractTestClass {
   @Autowired private ImageController controller;
 
   @Autowired private TestRestTemplate restTemplate;
+
+  @Autowired private XmlRiverClient xmlClient;
 
   @Test
   @SneakyThrows
@@ -113,7 +116,7 @@ class HttpRequestTest extends AbstractTestClass {
 
   @Test
   @SneakyThrows
-  void badBodyLondRequest() {
+  void badBodyLongRequest() {
     final ResponseEntity<String> response =
         restTemplate.getForEntity(
             String.format(
@@ -122,4 +125,20 @@ class HttpRequestTest extends AbstractTestClass {
             String.class);
       assertThat(response.getBody()).contains("name: размер должен находиться в диапазоне от 1 до 40");
   }
+  @Test
+  @SneakyThrows
+  void xmlRiverTest() {
+    final ResponseEntity<String> response =
+        restTemplate.getForEntity(
+                "https://xmlriver.com/search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query=batman",
+            String.class);
+    assertThat(response.getBody())
+        .contains("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+  }
+  @Test
+  @SneakyThrows
+  void checkXML() {
+    assertThat(ImageController.jsonSerializer(xmlClient.getImages("batman")).contains("[{\"id\":1"));
+  }
+
 }
