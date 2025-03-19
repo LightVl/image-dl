@@ -25,16 +25,16 @@ public class ImageController {
 
     @Getter
     @Setter
-    private static Integer quantity;
     private final LogService logService;
     private final XmlRiverClient xmlClient;
 
     @GetMapping(value = "${jsonconfiguration.jsonpath}", produces = "application/json")
-    public List<ImageLink> getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException, InterruptedException {
-        setQuantity(qty);
-        String output = jsonSerializer(xmlClient.getImages(name));
+    public List<ImageLink> getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException{
+        List<ImageLink> fullList = xmlClient.getImages(name);
+        fullList.subList(qty,fullList.size()).clear();
+        String output = jsonSerializer(fullList);
         new Thread(() -> logService.add(new Log(name, qty, output))).start();
-        return xmlClient.getImages(name);
+        return fullList;
     }
     public static String jsonSerializer (List<ImageLink> images) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
