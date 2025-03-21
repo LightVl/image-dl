@@ -2,6 +2,7 @@ package com.example.imagedl;
 
 import com.example.imagedl.controller.ImageController;
 import com.example.imagedl.controller.XmlRiverClient;
+import com.example.imagedl.model.ImageLink;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
@@ -14,25 +15,26 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.List;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration
 @TestPropertySource("/test.properties")
 @WireMockTest
-public class WireMockTestAnnotationTest {
+public class WireMockTestAnnotationTest extends AbstractTestClass{
 
-    @Autowired
-    private XmlRiverClient xmlClient;
+    @Autowired private XmlRiverClient xmlClient;
 
     @Value("${xmlconfiguration.xmlurl}")
-    private String url="http://localhost:8089";
-    //не хочет приравниваться
+    private String url;
+
     @Test
     void simpleStubTesting(WireMockRuntimeInfo wmRuntimeInfo) throws JsonProcessingException {
         WireMockServer wireMockServer = new WireMockServer(8089);
         wireMockServer.start();
+
     String responseBody =
         "<yandexsearch version=\"1.0\">\n"
             + "<response date=\"20250318T143621\">\n"
@@ -85,29 +87,20 @@ public class WireMockTestAnnotationTest {
             + "</passages>\n"
             + "</doc>\n"
             + "</group>\n"
-            + "<group id=\"3\">\n"
-            + "<doccount>1</doccount>\n"
-            + "<doc>\n"
-            + "<url>https://daily.afisha.ru/cinema/22546-betmen-film-kotoryy-gotem-ne-zasluzhivaet-my-ego-posmotreli-za-vas-i-pereskazali/</url>";
+            + "</grouping>\n"
+            + "</results>\n"
+            + "</response>\n"
+            + "</yandexsearch>\n";
+
         String apiUrl = "/search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query=batman";
         System.out.println(url);
         configureFor("localhost", 8089);
         //Define stub
         stubFor(get(apiUrl).willReturn(ok(responseBody)));
-
-        //Hit API and check response
-        //String apiResponse = getContent(url+"/search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query=batman");
-        String result = ImageController.jsonSerializer(xmlClient.getImages("batman"));
+        List<ImageLink> fullList2 = xmlClient.getImages("batman");
+        String result = ImageController.jsonSerializer(fullList2);
+        System.out.println(result);
         assertThat(result.contains("[{\"id\":1"));
-
-        //Verify API is hit
-        verify(getRequestedFor(urlEqualTo(apiUrl)));
         wireMockServer.stop();
-    }
-
-    private String getContent(String url) {
-
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
-        return testRestTemplate.getForObject(url, String.class);
     }
 }

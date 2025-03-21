@@ -47,10 +47,10 @@ public interface XmlRiverClient {
         }
         List<ImageLink> images = new ArrayList<>();
         NodeList hiList = doc.getElementsByTagName("imgurl");
-        for (int i = 1; i < hiList.getLength(); i++) {
+        for (int i = 0; i < hiList.getLength(); i++) {
           Node child = hiList.item(i);
           String contents = child.getTextContent();
-          images.add(new ImageLink(i, contents));
+          images.add(new ImageLink(i+1, contents));
         }
         return images;
       };
