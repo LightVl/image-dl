@@ -5,6 +5,7 @@ import com.example.imagedl.model.Log;
 import com.example.imagedl.repository.LogService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -25,16 +26,18 @@ public class ImageController {
 
     @Getter
     @Setter
-    private static Integer quantity;
     private final LogService logService;
     private final XmlRiverClient xmlClient;
 
     @GetMapping(value = "${jsonconfiguration.jsonpath}", produces = "application/json")
-    public List<ImageLink> getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException, InterruptedException {
-        setQuantity(qty);
-        String output = jsonSerializer(xmlClient.getImages(name));
+    public List<ImageLink> getImage(@RequestParam(value = "name") @Size(min=1, max=40) String name, @RequestParam @Min(1) @Max(20) Integer qty) throws IOException{
+        List<ImageLink> fullList = xmlClient.getImages(name);
+        //fullList.subList(qty,fullList.size()).clear();
+        List<List<ImageLink>> lists = Lists.partition(fullList,qty);
+        List<ImageLink> readyList = lists.getFirst();
+        String output = jsonSerializer(readyList);
         new Thread(() -> logService.add(new Log(name, qty, output))).start();
-        return xmlClient.getImages(name);
+        return readyList;
     }
     public static String jsonSerializer (List<ImageLink> images) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();

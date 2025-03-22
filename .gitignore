@@ -21,3 +21,4 @@
 /target/classes/com/example/imagedl/model/XmlConfiguration.class
 /target/classes/com/example/imagedl/controller/XmlRiverClient$Configuration.class
 /target/classes/com/example/imagedl/controller/XmlRiverClient.class
+/target/*
