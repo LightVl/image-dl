@@ -1,0 +1,55 @@
+<yandexsearch version="1.0">
+    <response date="20250321T162023">
+        <found priority="all">100</found>
+        <suggestedsearches>
+            <item>
+                <name>Обои</name>
+            </item>
+            <item>
+                <name>Лего</name>
+            </item>
+            <item>
+                <name>Комикс</name>
+            </item>
+            <item>
+                <name>Рабочий стол</name>
+            </item>
+            <item>
+                <name>Нарисовать</name>
+            </item>
+        </suggestedsearches>
+        <results>
+            <grouping>
+                <page first="1" last="100"/>
+                <group id="1">
+                    <doccount>1</doccount>
+                    <doc>
+                        <url>https://ru.wikipedia.org/wiki/Бэтмен</url>
+                        <imgurl>https://upload.wikimedia.org/wikipedia/ru/a/a2/Batman_Jim_Lee.jpg</imgurl>
+                        <title>Бэтмен — Википедия</title>
+                        <displaylink>Википедия</displaylink>
+                        <originalwidth>640</originalwidth>
+                        <originalheight>1024</originalheight>
+                        <passages>
+                            <passage/>
+                        </passages>
+                    </doc>
+                </group>
+                <group id="2">
+                    <doccount>1</doccount>
+                    <doc>
+                        <url>https://dc-universe.fandom.com/ru/wiki/Бэтмен</url>
+                        <imgurl>https://static.wikia.nocookie.net/dc-universe/images/0/00/Batman-inc-1-variant.jpg/revision/latest?cb\u003d20150910051002\u0026path-prefix\u003dru</imgurl>
+                        <title>Бэтмен | DC Universe вики | Fandom</title>
+                        <displaylink>DC Universe Wiki - Fandom</displaylink>
+                        <originalwidth>900</originalwidth>
+                        <originalheight>1368</originalheight>
+                        <passages>
+                            <passage/>
+                        </passages>
+                    </doc>
+                </group>
+            </grouping>
+        </results>
+    </response>
+</yandexsearch>
