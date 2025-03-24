@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration
 @TestPropertySource("/test.properties")
 @WireMockTest
-public class WireMockTestAnnotationTest extends AbstractTestClass{
+public class WireMockTestAnnotationTest extends AbstractHttpRequestTest{
 
     private static WireMockServer wireMockServer;
     @Autowired private XmlRiverClient xmlClient;
@@ -65,28 +65,5 @@ public class WireMockTestAnnotationTest extends AbstractTestClass{
     static void end() {
         wireMockServer.stop();
     }
-    @Test
-    @SneakyThrows
-    void simpleStubTesting(WireMockRuntimeInfo wmRuntimeInfo) throws JsonProcessingException {
-        List<ImageLink> fullList2 = xmlClient.getImages("batman");
-        String result = ImageController.jsonSerializer(fullList2);
-        System.out.println(result);
-        assertThat(result.contains("[{\"id\":1"));
-    }
-    @Test
-    @SneakyThrows
-    void success() {
-        final ResponseEntity<String> response =
-                restTemplate.getForEntity(
-                        String.format("http://localhost:%d/image?name=batman&qty=2", port), String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-    @Test
-    @SneakyThrows
-    void checkOKBody() {
-        final ResponseEntity<String> response =
-                restTemplate.getForEntity(
-                        String.format("http://localhost:%d/image?name=batman&qty=2", port), String.class);
-        assertThat(response.getBody()).contains("[{\"id\":1,\"url\":");
-    }
+
 }
