@@ -36,14 +36,14 @@ public interface XmlRiverClient {
         try {
           builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-          throw new IllegalArgumentException("configuration failed " + e);
+          throw new IllegalArgumentException("configuration failed ",e);
         }
         InputSource is = new InputSource(new StringReader(bodyStr));
         Document doc = null;
         try {
           doc = builder.parse(is);
         } catch (SAXException e) {
-          throw new IllegalArgumentException("parsing failed " + e);
+          throw new IllegalArgumentException("parsing failed ",e);
         }
         List<ImageLink> images = new ArrayList<>();
         NodeList hiList = doc.getElementsByTagName("imgurl");
