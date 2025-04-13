@@ -24,36 +24,36 @@ import java.util.List;
 public interface XmlRiverClient {
     @GetMapping(value = "${xmlconfiguration.xmlpath}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
-    public List<ImageLink> getImages(@PathVariable String name);
+    List<ImageLink> getImages(@PathVariable String name);
 
     class Configuration {
         @Bean
         public Decoder feignDecoder() {
-            return (response, type) -> {
-                String bodyStr = Util.toString(response.body().asReader(Util.UTF_8));
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = null;
-                try {
-                    builder = factory.newDocumentBuilder();
-                } catch (ParserConfigurationException e) {
-                    throw new IllegalArgumentException("configuration failed "+e);
-                }
-                InputSource is = new InputSource(new StringReader(bodyStr));
-                Document doc = null;
-                try {
-                    doc = builder.parse(is);
-                } catch (SAXException e) {
-                    throw new IllegalArgumentException("parsing failed "+e);
-                }
-                List<ImageLink> images= new ArrayList<>();
-                NodeList hiList = doc.getElementsByTagName("imgurl");
-                for (Integer i = 1; i <= ImageController.getQuantity(); i++) {
-                    Node child = hiList.item(i);
-                    String contents = child.getTextContent();
-                    images.add(new ImageLink(i, contents));
-                }
-                return images;
-            };
+      return (response, type) -> {
+        String bodyStr = Util.toString(response.body().asReader(Util.UTF_8));
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+          builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+          throw new IllegalArgumentException("configuration failed ",e);
+        }
+        InputSource is = new InputSource(new StringReader(bodyStr));
+        Document doc = null;
+        try {
+          doc = builder.parse(is);
+        } catch (SAXException e) {
+          throw new IllegalArgumentException("parsing failed ",e);
+        }
+        List<ImageLink> images = new ArrayList<>();
+        NodeList hiList = doc.getElementsByTagName("imgurl");
+        for (int i = 0; i < hiList.getLength(); i++) {
+          Node child = hiList.item(i);
+          String contents = child.getTextContent();
+          images.add(new ImageLink(i+1, contents));
+        }
+        return images;
+      };
         }
     }
 }

@@ -1,5 +1,5 @@
 xmlconfiguration:
-  xmlurl: https://xmlriver.com/
+  xmlurl: https://xmlriver.com
   xmlpath: /search/xml?setab=images&user=11971&key=f64f40381be005af50a5abf88508e9a7c51274ed&query={name}
 jsonconfiguration:
   jsonpath: /image
